@@ -32,6 +32,14 @@ nav {
   background-color: #F3F5F9;
 }
 
+.code {
+  color: #e16245;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  background-color: #f7f7f7;
+  display: inline-block;
+}
+
 .navbar-logo {
   height: 90px;
 }
