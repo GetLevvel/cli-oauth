@@ -59,13 +59,13 @@ release="beta"
 #Gather OS and Arch
 os=$(uname | sed -e 's/\(.*\)/\L\1/')
 arch=$(uname -m)
-if [[ $arch=="x86_64" ]]
+if [[ "$arch" = "x86_64" ]]
 then
    arch=$(echo $arch | sed -e 's/86_//')
 fi           
 
 # Check for Xcode Command Line Tools on MacOS.
-if [[ "$os"=="darwin" ]]
+if [[ "$os" = "darwin" ]];
 then 
   if ! [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]
   then 
@@ -74,7 +74,7 @@ then
 fi  
 
 #Check for git on linux
-if [[ "$os"=="linux" ]]
+if [[ "$os" = "linux" ]]
 then
   if ! [[ -f "/usr/bin/git" ]]
   then 
@@ -95,7 +95,7 @@ fi
 #Install lvl-cli
 mkdir -p $HOME/.lvl_cli
 cd $HOME/.lvl_cli
-curl http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
+curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
 tar -zxf lvl-$os-$arch.tar.gz 
 if [[ ! -z $(grep "lvl_cli" "$HOME/.bashrc") ]]
 then
@@ -109,3 +109,4 @@ source $HOME/.bashrc
 #login to github
 lvl login $CLI_GITHUB_TOKEN
 lvl log:set-token $CLI_LOG_TOKEN
+echo "lvl_cli has been successfully installed!"
