@@ -57,7 +57,7 @@ escape() {
 release="beta"
 
 #Gather OS and Arch
-os=$(uname | sed -e 's/\(.*\)/\L\1/')
+os=$(uname | tr '[A-Z]' '[a-z]')
 arch=$(uname -m)
 if [[ "$arch" = "x86_64" ]]
 then
@@ -96,7 +96,7 @@ fi
 mkdir -p $HOME/.lvl_cli
 cd $HOME/.lvl_cli
 curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
-gunzip -c lvl-$os-$arch.tar.gz | tar xopf - 
+tar -zxf lvl-$os-$arch.tar.gz 
 if [[ ! -z $(grep "lvl_cli" "$HOME/.bashrc") ]]
 then
     :
