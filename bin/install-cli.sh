@@ -109,4 +109,4 @@ source $HOME/.bash_profile
 #login to github
 lvl login $CLI_GITHUB_TOKEN
 lvl log:set-token $CLI_LOG_TOKEN
-echo "lvl_cli has been successfully installed!"
+echo "lvl_cli has been successfully installed! Run lvl -h to get started."
