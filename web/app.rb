@@ -51,9 +51,19 @@ get "/" do
 
   @title = "Levvel CLI"
   @text = <<~HTML
-    <h4 class="pb-3">To install the CLI:<h4>
-    <p>It's assumed that you have atleast Node.js >=10.5, Yarn, and GIT installed
-    <h5 class="pb-2">On Mac.</h5>
+    <p class="font-italic">⚠️ The lvl cli project only works with MacOS and Linux natively.  Windows 
+    is supported, but you will have to enable 
+    <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank">Windows Subsystem for Linux</a>
+    </p>
+    <p class="font-italic">💡 Note that in order to run the lvl cli, you must have 
+      <a href="https://nodejs.org/en/download/" target="_blank">node.js</a> 
+      v 10.5 (or greater), 
+      <a href="https://classic.yarnpkg.com/en/docs/install/#mac-stable" target="_blank">yarn</a>
+      , and 
+      <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank">git</a>
+       installed
+    <div class="ml-3">
+    <h5 class="pb-2">Installation Instructions</h5>
     <ol>
       <li>
         <a class="no-underline" href="/install-cli.sh">
@@ -64,19 +74,13 @@ get "/" do
         that's been customised for your GitHub user (or
         <a href="/install-cli.sh?text=1">view it</a>
         first). This will prompt for access to your email, public and private
-        repositories; you'll need to provide access to any organizations whose
-        repositories you need to be able to <code>git clone</code>. This is
-        used to add a GitHub access token to the <code>install-cli.sh</code> script
-        and is not otherwise used by this web application or stored
-        anywhere.
+        repositories; this is in order to allow you to pull resources from other GetLevvel. 
+        Please keep this token safe since it allows actions to be made to GetLevvel's repositories
+        on your behalf!
       </li>
       <li>
-        Run CLI installation in Terminal.app with <code>bash ~/Downloads/install-cli.sh</code>.
-      </li>
-      <li>
-        If something failed, run CLI installation with more debugging output in
-        Terminal.app with <code>bash ~/Downloads/install-cli.sh --debug</code> and
-        #{debugging_text}.
+        Run <code>install-cli.sh</code> in Terminal.app (or any other bash supported command line) 
+        with <code>bash ~/Downloads/install-cli.sh</code>.
       </li>
       <li>
         Delete the customised <code>install-cli.sh</code> (it has a GitHub token
@@ -84,43 +88,18 @@ get "/" do
         <code>rm -f ~/Downloads/install-cli.sh</code>
       </li>
       <li>
-        Install additional software with
-        <code>brew install</code> and
-        <code>brew cask install</code>.
+        Run <code>lvl -h</code> to see the palette of available commands. Happy developing!
       </li>
     </ol>
-    <h5 class="pb-2">On PC.</h5>
-    <ol>
-    <li>
-      <a class="no-underline" href="/install-cli-win.sh">
-        <button type="button" class="btn btn-sm">
-          Download the <code>install-cli-win.sh</code> (Recommended)
-        </button>
-      </a>
-      <a class="no-underline" href="/install-cli-win.cmd">
-        <button type="button" class="btn btn-sm">
-          Download the <code>install-cli-win.cmd</code>
-        </button>
-      </a>
-      that's been customised for your GitHub user (or
-      <a href="/install-cli-win.sh?text=1">view it</a>
-      first). This will prompt for access to your email, public and private
-      repositories; you'll need to provide access to any organizations whose
-      repositories you need to be able to <code>git clone</code>. This is
-      used to add a GitHub access token to the <code>install-cli-win.sh</code> script
-      and is not otherwise used by this web application or stored
-      anywhere.
-    </li>
-    <li>
-      Run CLI installation in Terminal.app with <code>bash ~/Downloads/install-cli-win.sh</code>.
-    </li>
-    <li>
-      Delete the customised <code>install-cli-win.sh</code> (it has a GitHub token
-      in it) in Terminal.app with
-      <code>rm -f ~/Downloads/install-cli-win.sh</code>
-    </li>
-    <li>That's pretty much as far as we've got so far.</li>
-    </ol>
+    </div>
+    <p class="font-italic">
+      💡 If you run into an error or have questions, you can ping the 
+      #lvl_cli channel in slack and someone will assist you. If you find a problem, please 
+      consider filing an 
+      <a href="https://github.com/GetLevvel/lvl_cli/issues" target="_blank">
+      issue
+      </a> in the lvl-cli repository.
+    </p>
   HTML
   erb :root
 end

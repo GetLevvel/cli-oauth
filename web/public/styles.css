@@ -32,12 +32,17 @@ nav {
   background-color: #F3F5F9;
 }
 
-.code {
+.slogan-code {
   color: #e16245;
   border: 1px solid darkgray;
   border-radius: 3px;
   background-color: #f7f7f7;
   display: inline-block;
+  margin-bottom: -11px;
+}
+
+code {
+  color: #e16245 !important;
 }
 
 .navbar-logo {
@@ -86,10 +91,19 @@ button:hover {
   color: white;
 }
 
+button:hover > code {
+  color: #ff9d58 !important;
+}
+
 .bottom-page {
   padding-bottom: 65px;
 }
 
 a.no-underline {
   text-decoration: none;
+}
+
+.bottom-logo {
+  margin-bottom: 3px;
+  margin-left: 10px;
 }

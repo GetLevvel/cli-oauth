@@ -53,28 +53,60 @@ escape() {
   printf '%s' "${1//\'/\'}"
 }
 
-[ "$USER" = "root" ] && abort "Install the CLI as yourself, not root."
-groups | grep $Q -E "\b(admin)\b" || abort "Add $USER to the admin group."
+#set release channel
+release="beta"
 
-
-# Install the Xcode Command Line Tools.
-if ! [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]
+#Gather OS and Arch
+os=$(uname | tr '[A-Z]' '[a-z]')
+arch=$(uname -m)
+if [[ "$arch" = "x86_64" ]]
 then
-  log "Please install the XCode Command Line Tools to acquire git binaries."
+   arch=$(echo $arch | sed -e 's/86_//')
+fi           
+
+# Check for Xcode Command Line Tools on MacOS.
+if [[ "$os" = "darwin" ]];
+then 
+  if ! [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]
+  then 
+    echo "Please install the XCode Command Line Tools to acquire git binaries."
+  fi
+fi  
+
+#Check for git on linux
+if [[ "$os" = "linux" ]]
+then
+  if ! [[ -f "/usr/bin/git" ]]
+  then 
+    echo "Please install git for the required binaries"
+  fi
 fi
 
-logk
 
-mkdir $HOME/.lvl_cli
+#Set lvl_cli dir
+dir="$HOME/.lvl_cli"
+
+#check for previous installation  
+if [ -d "$dir" -a ! -h "$dir" ]
+then
+   npm unlink $dir --silent
+fi
+
+#Install lvl-cli
+mkdir -p $HOME/.lvl_cli
 cd $HOME/.lvl_cli
-git clone https://$CLI_GITHUB_USER:$CLI_GITHUB_TOKEN@github.com/GetLevvel/lvl_cli.git repo
-cd $HOME/.lvl_cli/repo
-git checkout -b release -t origin/release
-npm link --force
-cd $HOME/.lvl_cli/repo/packages/lvl_cli
-npm link --force
+curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
+tar -zxf lvl-$os-$arch.tar.gz 
+if [[ ! -z $(grep "lvl_cli" "$HOME/.bash_profile") ]]
+then
+    :
+else
+    echo export PATH="\$PATH:$dir/lvl/bin/" >> $HOME/.bash_profile
+fi
 
+source $HOME/.bash_profile
+
+#login to github
 lvl login $CLI_GITHUB_TOKEN
 lvl log:set-token $CLI_LOG_TOKEN
-
-log "lvl_cli has been installed successfully! Run lvl -h to get started."
+echo "lvl_cli has been successfully installed! Run lvl -h to get started."
