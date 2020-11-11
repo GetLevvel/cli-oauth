@@ -62,7 +62,12 @@ arch=$(uname -m)
 if [[ "$arch" = "x86_64" ]]
 then
    arch=$(echo $arch | sed -e 's/86_//')
-fi           
+fi    
+
+if [ "$os" != "linux" ] && [ "$os" != "darwin" ]
+then
+  echo "This is an unsupported enviroment. Please contact us at https://github.com/GetLevvel/lvl_cli/issues or in slack #lvl_cli"
+fi
 
 # Check for git 
 if ! git --version
