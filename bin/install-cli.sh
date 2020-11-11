@@ -64,25 +64,12 @@ then
    arch=$(echo $arch | sed -e 's/86_//')
 fi           
 
-# Check for Xcode Command Line Tools on MacOS.
-if [[ "$os" = "darwin" ]];
+# Check for git 
+if ! git --version
 then 
-  if ! [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]
-  then 
-    echo "Please install the XCode Command Line Tools to acquire git binaries."
-  fi
-fi  
-
-#Check for git on linux
-if [[ "$os" = "linux" ]]
-then
-  if ! [[ -f "/usr/bin/git" ]]
-  then 
-    echo "Please install git for the required binaries"
-  fi
+  echo "Installer cannot use git command. Please verify git is installed!"
 fi
-
-
+  
 #Set lvl_cli dir
 dir="$HOME/.lvl_cli"
 
