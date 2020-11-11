@@ -62,27 +62,19 @@ arch=$(uname -m)
 if [[ "$arch" = "x86_64" ]]
 then
    arch=$(echo $arch | sed -e 's/86_//')
-fi           
+fi    
 
-# Check for Xcode Command Line Tools on MacOS.
-if [[ "$os" = "darwin" ]];
-then 
-  if ! [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]
-  then 
-    echo "Please install the XCode Command Line Tools to acquire git binaries."
-  fi
-fi  
-
-#Check for git on linux
-if [[ "$os" = "linux" ]]
+if [ "$os" != "linux" ] && [ "$os" != "darwin" ]
 then
-  if ! [[ -f "/usr/bin/git" ]]
-  then 
-    echo "Please install git for the required binaries"
-  fi
+  echo "This is an unsupported enviroment. Please contact us at https://github.com/GetLevvel/lvl_cli/issues or in slack #lvl_cli"
 fi
 
-
+# Check for git 
+if ! git --version
+then 
+  echo "Installer cannot use git command. Please verify git is installed!"
+fi
+  
 #Set lvl_cli dir
 dir="$HOME/.lvl_cli"
 
