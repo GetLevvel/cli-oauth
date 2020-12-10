@@ -88,15 +88,20 @@ fi
 mkdir -p $HOME/.lvl_cli
 cd $HOME/.lvl_cli
 curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
-tar -zxf lvl-$os-$arch.tar.gz 
-if [[ ! -z $(grep "lvl_cli" "$HOME/.bash_profile") ]]
-then
-    :
-else
-    echo export PATH="\$PATH:$dir/lvl/bin/" >> $HOME/.bash_profile
-fi
+tar -zxf lvl-$os-$arch.tar.gz
 
-source $HOME/.bash_profile
+if [[ ! -z $(grep "lvl_cli" "$HOME/.zshrc") ]]; then
+    if [[ ! -z $(grep "lvl_cli" "$HOME/.bash_profile") ]]; then
+        :
+    else
+        echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.bash_profile
+    fi
+
+    source $HOME/.bash_profile
+else
+    echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.zshenv
+    source $HOME/.zshenv
+fi
 
 #login to github
 lvl login $CLI_GITHUB_TOKEN
