@@ -62,42 +62,61 @@ arch=$(uname -m)
 if [[ "$arch" = "x86_64" ]]
 then
    arch=$(echo $arch | sed -e 's/86_//')
-fi    
+fi
 
 if [ "$os" != "linux" ] && [ "$os" != "darwin" ]
 then
   echo "This is an unsupported enviroment. Please contact us at https://github.com/GetLevvel/lvl_cli/issues or in slack #lvl_cli"
+  exit 1
 fi
 
 # Check for git 
 if ! git --version
 then 
-  echo "Installer cannot use git command. Please verify git is installed!"
+  echo "Installer cannot use the git command. Please verify git is installed!"
+  exit 1
 fi
-  
+
+# Check for node
+if ! npm -v
+then 
+  echo "Installer cannot use the npm command. Please verify npm is installed!"
+  exit 1
+fi
+
+# Check for yarn
+if ! yarn -v
+then 
+  echo "Installer cannot use the yarn command. Please verify yarn is installed!"
+  exit 1
+fi
+
 #Set lvl_cli dir
-dir="$HOME/.lvl_cli"
+dir="$(eval echo ~)/.lvl_cli"
 
 #check for previous installation  
 if [ -d "$dir" -a ! -h "$dir" ]
 then
    npm unlink $dir --silent
+   rm -rf $dir
 fi
 
 #Install lvl-cli
-mkdir -p $HOME/.lvl_cli
-cd $HOME/.lvl_cli
+mkdir -p $dir
+cd $dir
 curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
 tar -zxf lvl-$os-$arch.tar.gz
 
 if [ $SHELL = "/bin/zsh" ]; then
-    echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.zshenv
-    echo "PATH updated in "$HOME/.zshenv
-    source $HOME/.zshenv
+    echo >>~/.bash_profile
+    echo export PATH="\$PATH:$dir/lvl/bin/" >>~/.zshenv
+    echo "PATH updated in "~/.zshenv
+    source ~/.zshenv
 elif [ $SHELL = "/bin/bash" ]; then
-    echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.bash_profile
-    echo "PATH updated in "$HOME/.bash_profile
-    source $HOME/.bash_profile
+    echo >>~/.bash_profile
+    echo export PATH="\$PATH:$dir/lvl/bin/" >>~/.bash_profile
+    echo "PATH updated in "~/.bash_profile
+    source ~/.bash_profile
 fi
 
 #login to github
