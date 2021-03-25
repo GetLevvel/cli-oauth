@@ -74,7 +74,7 @@ get "/" do
           </button>
         </a>
         for Windows that's been customised for your GitHub user (or
-        <a href="/install-cli.sh?text=1">view *nix</a>
+        <a href="/install-cli.sh?text=1">view *nix</a> / 
         <a href="/install-cli-win.sh?text=1">view Windows</a>
         first). This will prompt for access to your email, public and private
         repositories; this is in order to allow you to pull resources from other GetLevvel. 
