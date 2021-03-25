@@ -91,7 +91,7 @@ then
 fi
 
 #Set lvl_cli dir
-dir="~/.lvl_cli"
+dir="$(eval echo ~)/.lvl_cli"
 
 #check for previous installation  
 if [ -d "$dir" -a ! -h "$dir" ]
@@ -106,6 +106,7 @@ cd $dir
 curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-win32-x64.tar.gz --output $dir/lvl-$os-$arch.tar.gz
 tar -zxf lvl-$os-$arch.tar.gz
 
+echo >>~/.bash_profile
 echo export PATH="\$PATH:$dir/lvl/bin/" >>~/.bash_profile
 echo "PATH updated in "~/.bash_profile
 source ~/.bash_profile
