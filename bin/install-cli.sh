@@ -92,7 +92,7 @@ then
 fi
 
 #Set lvl_cli dir
-dir="$HOME/.lvl_cli"
+dir="~/.lvl_cli"
 
 #check for previous installation  
 if [ -d "$dir" -a ! -h "$dir" ]
@@ -102,19 +102,19 @@ then
 fi
 
 #Install lvl-cli
-mkdir -p $HOME/.lvl_cli
-cd $HOME/.lvl_cli
+mkdir -p $dir
+cd $dir
 curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-$os-$arch.tar.gz --output $dir/lvl-$os-$arch.tar.gz
 tar -zxf lvl-$os-$arch.tar.gz
 
 if [ $SHELL = "/bin/zsh" ]; then
-    echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.zshenv
-    echo "PATH updated in "$HOME/.zshenv
-    source $HOME/.zshenv
+    echo export PATH="\$PATH:$dir/lvl/bin/" >>~/.zshenv
+    echo "PATH updated in "~/.zshenv
+    source ~/.zshenv
 elif [ $SHELL = "/bin/bash" ]; then
-    echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.bash_profile
-    echo "PATH updated in "$HOME/.bash_profile
-    source $HOME/.bash_profile
+    echo export PATH="\$PATH:$dir/lvl/bin/" >>~/.bash_profile
+    echo "PATH updated in "~/.bash_profile
+    source ~/.bash_profile
 fi
 
 #login to github
