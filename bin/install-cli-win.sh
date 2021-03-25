@@ -56,17 +56,60 @@ escape() {
   printf '%s' "${1//\'/\'}"
 }
 
-rm -rf ~/appdata/local/levvel/.lvl_cli
-mkdir -p ~/appdata/local/levvel/.lvl_cli
-cd ~/appdata/local/levvel/.lvl_cli
-git clone https://$CLI_GITHUB_USER:$CLI_GITHUB_TOKEN@github.com/GetLevvel/lvl_cli.git repo
-cd ~/appdata/local/levvel/.lvl_cli/repo
-git checkout -b release -t origin/release
-npm link --force
-cd ~/appdata/local/levvel/.lvl_cli/repo/packages/lvl_cli
-npm link --force
 
+#set release channel
+release="beta"
+
+#Gather OS and Arch
+os=$(uname | tr '[A-Z]' '[a-z]')
+arch=$(uname -m)
+if ! [[ $os =~ "mingw64" ]]
+then
+  echo "This is an unsupported enviroment. Please contact us at https://github.com/GetLevvel/lvl_cli/issues or in slack #lvl_cli"
+  exit 1
+fi
+
+# Check for git 
+if ! git --version
+then 
+  echo "Installer cannot use the git command. Please verify git is installed!"
+  exit 1
+fi
+
+# Check for node
+if ! npm -v
+then 
+  echo "Installer cannot use the npm command. Please verify npm is installed!"
+  exit 1
+fi
+
+# Check for yarn
+if ! yarn -v
+then 
+  echo "Installer cannot use the yarn command. Please verify yarn is installed!"
+  exit 1
+fi
+
+#Set lvl_cli dir
+dir="$HOME/.lvl_cli"
+
+#check for previous installation  
+if [ -d "$dir" -a ! -h "$dir" ]
+then
+   npm unlink $dir --silent
+fi
+
+#Install lvl-cli
+mkdir -p $HOME/.lvl_cli
+cd $HOME/.lvl_cli
+curl -s http://lvl-cli.s3.amazonaws.com/channels/$release/lvl-win32-x64.tar.gz --output $dir/lvl-$os-$arch.tar.gz
+tar -zxf lvl-$os-$arch.tar.gz
+
+echo export PATH="\$PATH:$dir/lvl/bin/" >>$HOME/.bash_profile
+echo "PATH updated in "$HOME/.bash_profile
+source $HOME/.bash_profile
+
+#login to github
 lvl login $CLI_GITHUB_TOKEN
 lvl log:set-token $CLI_LOG_TOKEN
-
-printf "${ORANGE}lvl_cli has been installed successfully! Run lvl -h to get started.\e[0m"
+echo "lvl_cli has been successfully installed! Run lvl -h to get started."

@@ -51,17 +51,14 @@ get "/" do
 
   @title = "Levvel CLI"
   @text = <<~HTML
-    <p class="font-italic">⚠️ The lvl cli project only works with MacOS and Linux natively.  Windows 
-    is supported, but you will have to enable 
-    <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank">Windows Subsystem for Linux</a>
+    <p class="font-italic">⚠️ The lvl cli project only works with Linux, MacOS, Windows, and Windows Subsystem for Linux (WSL).
     </p>
     <p class="font-italic">💡 Note that in order to run the lvl cli, you must have 
       <a href="https://nodejs.org/en/download/" target="_blank">node.js</a> 
       v 10.5 (or greater), 
-      <a href="https://classic.yarnpkg.com/en/docs/install/#mac-stable" target="_blank">yarn</a>
-      , and 
+      <a href="https://classic.yarnpkg.com/en/docs/install/#mac-stable" target="_blank">yarn</a>, and 
       <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank">git</a>
-       installed
+       installed.
     <div class="ml-3">
     <h5 class="pb-2">Installation Instructions</h5>
     <ol>
@@ -70,9 +67,15 @@ get "/" do
           <button type="button" class="btn btn-sm">
             Download the <code>install-cli.sh</code>
           </button>
+        </a>for MacOS, Linux, and WSL or
+        <a class="no-underline" href="/install-cli-win.sh">
+          <button type="button" class="btn btn-sm">
+            Download the <code>install-cli-win.sh</code>
+          </button>
         </a>
-        that's been customised for your GitHub user (or
-        <a href="/install-cli.sh?text=1">view it</a>
+        for Windows that's been customised for your GitHub user (or
+        <a href="/install-cli.sh?text=1">view *nix</a>
+        <a href="/install-cli-win.sh?text=1">view Windows</a>
         first). This will prompt for access to your email, public and private
         repositories; this is in order to allow you to pull resources from other GetLevvel. 
         Please keep this token safe since it allows actions to be made to GetLevvel's repositories
