@@ -98,6 +98,7 @@ dir="$HOME/.lvl_cli"
 if [ -d "$dir" -a ! -h "$dir" ]
 then
    npm unlink $dir --silent
+   rm -rf $dir
 fi
 
 #Install lvl-cli
